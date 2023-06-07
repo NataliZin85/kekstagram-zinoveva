@@ -1,4 +1,4 @@
-# Личный проект Keksobooking
+# Личный проект `Keksobooking`
 
 * Студент: [{{userName}}]({{userProfile}}).
 * Наставник: `Неизвестно`.
