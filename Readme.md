@@ -1,7 +1,7 @@
 # Личный проект `Kekstagram`
 
-* Студент: [{{userName}}]({{userProfile}}).
-* Наставник: `Неизвестно`.
+* Студент: [Наталья Зиновьева](https://up.htmlacademy.ru/htmlcss/34/user/2050153).
+* Наставник: [Коля Колганов](https://htmlacademy.ru/profile/id794007).
 
 ---
 
