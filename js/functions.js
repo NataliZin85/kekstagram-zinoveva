@@ -1,3 +1,4 @@
+/*
 // Функция для проверки длины строки.
 
 function checkStringLength (stringValue, maxLength) {
@@ -46,3 +47,29 @@ console.log(findNumber('ECMAScript 2022'));     // 2022
 console.log(findNumber('1 кефир, 0.5 батона')); // 1
 console.log(findNumber('агент 007'));           // 7
 console.log(findNumber('а я томат'));           // NaN
+*/
+
+// функция, которая принимает время начала и конца рабочего дня, а также время старта и продолжительность встречи
+
+const getTime = (timeString) => {
+  const [hour, minute] = timeString.split(':');
+
+  return hour * 60 + Number(minute);
+};
+
+function checkTime(startDay, endDay, meetingStart, meetingDuration) {
+  const startDayTime = getTime(startDay);
+  const endDayTime = getTime(endDay);
+  const startMeetingTime = getTime(meetingStart);
+
+  return (
+    startMeetingTime >= startDayTime &&
+    meetingStart + meetingDuration <= endDayTime
+  );
+}
+
+checkTime('08:00', '17:30', '14:00', 90); // true
+checkTime('8:0', '10:0', '8:0', 120); // true
+checkTime('08:00', '14:30', '14:00', 90); // false
+checkTime('14:00', '17:30', '08:0', 90); // false
+checkTime('8:00', '17:30', '08:00', 900); // false
