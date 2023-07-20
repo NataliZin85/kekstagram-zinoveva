@@ -1,3 +1,5 @@
 import './util.js';
-import './data.js';
-import './miniPictures.js';
+import {createObjects} from './data.js';
+import { renderMiniPictures } from './miniPictures.js';
+
+renderMiniPictures(createObjects()); // чтобы модули оставались независимыми

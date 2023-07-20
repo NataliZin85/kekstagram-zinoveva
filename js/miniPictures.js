@@ -1,24 +1,31 @@
-import {createObjects} from './data.js';
-
 const userPictures = document.querySelector('.pictures');
 
 // находим template '#picture'
-const templateMiniPictures = document.querySelector('#picture')
+const templateMiniPicture = document.querySelector('#picture')
   .content
   .querySelector('.picture');
 
-const similarObjects = createObjects();
-
-const fragment = document.createDocumentFragment();
-
 // клонирование изображений по шаблону
-similarObjects.forEach(({url, description, likes, comments}) => {
-  const pictureObject = templateMiniPictures.cloneNode(true);
+const createMiniPicture = ({url, description, likes, comments}) => {
+  const pictureObject = templateMiniPicture.cloneNode(true);
+
   pictureObject.querySelector('.picture__img').src = url;
   pictureObject.querySelector('.picture__img').alt = description;
   pictureObject.querySelector('.picture__likes').textContent = likes;
   pictureObject.querySelector('.picture__comments').textContent = comments.length;
-  fragment.appendChild(pictureObject);
-});
 
-userPictures.appendChild(fragment);
+  return pictureObject;
+};
+
+// добавление клонированных изображений в контейнер ".pictures"
+const renderMiniPictures = (pictures) => {
+  const fragment = document.createDocumentFragment();
+  pictures.forEach((picture) => {
+    const pictureObject = createMiniPicture(picture);
+    fragment.append(pictureObject);
+  });
+
+  userPictures.append(fragment);
+};
+
+export { renderMiniPictures };
