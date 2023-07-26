@@ -91,7 +91,7 @@ const createMessage = () => Array.from(
 // создаем комментарии
 const createComment = () => ({
   id: generateCommentId(),
-  avatar: `img/avatar-${ createRandomInteger(1, AVATAR_COUNT)}.svg`,
+  avatar: `img/avatar-${ createRandomInteger(1, AVATAR_COUNT)() }.svg`,
   message: createMessage(),
   name: getRandomArrayElement(COMMENT_NAME),
 });
@@ -113,4 +113,4 @@ const createObjects = () => Array.from(
   (_,pictureIndex) => createObject(pictureIndex + 1),
 );
 
-export {createObjects};
+export { createObjects };

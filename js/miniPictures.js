@@ -1,24 +1,48 @@
-import {createObjects} from './data.js';
+import { openBigPicture } from './picturePopup.js';
+import { isEnterKey } from './util.js';
 
 const userPictures = document.querySelector('.pictures');
 
 // находим template '#picture'
-const templateMiniPictures = document.querySelector('#picture')
+const templateMiniPicture = document.querySelector('#picture')
   .content
   .querySelector('.picture');
 
-const similarObjects = createObjects();
-
-const fragment = document.createDocumentFragment();
+const handleMiniPictureClick = (evt,data) => {
+  evt.preventDefault();
+  openBigPicture(data);
+};
 
 // клонирование изображений по шаблону
-similarObjects.forEach(({url, description, likes, comments}) => {
-  const pictureObject = templateMiniPictures.cloneNode(true);
-  pictureObject.querySelector('.picture__img').src = url;
-  pictureObject.querySelector('.picture__img').alt = description;
-  pictureObject.querySelector('.picture__likes').textContent = likes;
-  pictureObject.querySelector('.picture__comments').textContent = comments.length;
-  fragment.appendChild(pictureObject);
-});
+const createMiniPicture = (data) => {
+  const { url, description, likes, comments } = data;
+  const miniPictureObject = templateMiniPicture.cloneNode(true);
 
-userPictures.appendChild(fragment);
+  miniPictureObject.querySelector('.picture__img').src = url;
+  miniPictureObject.querySelector('.picture__img').alt = description;
+  miniPictureObject.querySelector('.picture__likes').textContent = likes;
+  miniPictureObject.querySelector('.picture__comments').textContent = comments.length;
+
+  miniPictureObject.addEventListener('click', (evt) => handleMiniPictureClick(evt, data));
+
+  miniPictureObject.addEventListener('keydown', (evt) => {
+    if (isEnterKey(evt)) {
+      openBigPicture(data);
+    }
+  });
+
+  return miniPictureObject;
+};
+
+// добавление клонированных изображений в контейнер ".pictures"
+const renderMiniPictures = (pictures) => {
+  const fragment = document.createDocumentFragment();
+  pictures.forEach((picture) => {
+    const miniPictureObject = createMiniPicture(picture);
+    fragment.append(miniPictureObject);
+  });
+
+  userPictures.append(fragment);
+};
+
+export { renderMiniPictures };
