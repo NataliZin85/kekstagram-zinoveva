@@ -1,4 +1,5 @@
 import { openBigPicture } from './picturePopup.js';
+import { isEnterKey } from './util.js';
 
 const userPictures = document.querySelector('.pictures');
 
@@ -6,6 +7,11 @@ const userPictures = document.querySelector('.pictures');
 const templateMiniPicture = document.querySelector('#picture')
   .content
   .querySelector('.picture');
+
+const handleMiniPictureClick = (evt,data) => {
+  evt.preventDefault();
+  openBigPicture(data);
+};
 
 // клонирование изображений по шаблону
 const createMiniPicture = (data) => {
@@ -17,7 +23,14 @@ const createMiniPicture = (data) => {
   miniPictureObject.querySelector('.picture__likes').textContent = likes;
   miniPictureObject.querySelector('.picture__comments').textContent = comments.length;
 
-  //miniPictureObject.addEventListener('click', () => openBigPicture(data));
+  miniPictureObject.addEventListener('click', (evt) => handleMiniPictureClick(evt, data));
+
+  miniPictureObject.addEventListener('keydown', (evt) => {
+    if (isEnterKey(evt)) {
+      openBigPicture(data);
+    }
+  });
+
   return miniPictureObject;
 };
 
@@ -26,11 +39,6 @@ const renderMiniPictures = (pictures) => {
   const fragment = document.createDocumentFragment();
   pictures.forEach((picture) => {
     const miniPictureObject = createMiniPicture(picture);
-    miniPictureObject.addEventListener('click', (evt) => {
-      evt.preventDefault();
-      openBigPicture(picture);
-    });
-
     fragment.append(miniPictureObject);
   });
 

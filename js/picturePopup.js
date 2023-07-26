@@ -2,7 +2,6 @@ import { isEscapeKey, isEnterKey } from './util.js';
 import { showBigPicture, renderBigComments } from './bigPicture.js';
 
 const bigPicture = document.querySelector('.big-picture');
-// const miniPicture = document.querySelectorAll('.picture');
 const bigPictureExit = document.querySelector('#picture-cancel');
 const commentsCount = bigPicture.querySelector('.social__comment-count');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
@@ -26,14 +25,8 @@ function openBigPicture (data) {
 
 function closeBigPicture () {
   bigPicture.classList.add('hidden');
-  document.addEventListener('keydown', onDocumentKeydown);
+  document.removeEventListener('keydown', onDocumentKeydown);
 }
-
-// miniPicture.addEventListener('keydown', (evt) => {
-//   if (isEnterKey(evt)) {
-//     openBigPicture();
-//   }
-// });
 
 bigPictureExit.addEventListener('click', () => {
   closeBigPicture();

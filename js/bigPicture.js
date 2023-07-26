@@ -4,13 +4,15 @@ const bigPictureImage = bigPicture.querySelector('.big-picture__img > img');
 const bigPictureLikes = bigPicture.querySelector('.likes-count');
 const bigPictureCommentsCount = bigPicture.querySelector('.comments-count');
 const bigPictureDescription = bigPicture.querySelector('.social__caption');
-// const bigPictureCommentsTemplate = document.querySelector('.social__comment');
-//  .content - не template
-//  .querySelector('.social__picture');
+const bigPictureCommentTemplate = document.querySelector('#comment')
+  .content
+  .querySelector('.social__comment');
 const bigPictureComments = bigPicture.querySelector('.social__comments');
+//const bigPictureComment = bigPicture.querySelector('.social__comment');
 
+// клонирование комментариев из template - #comment
 const createBigPictureComment = ({ avatar, name, message }) => {
-  const comment = bigPictureComments.cloneNode(true);
+  const comment = bigPictureCommentTemplate.cloneNode(true);
 
   comment.querySelector('.social__picture').src = avatar;
   comment.querySelector('.social__picture').alt = name;
@@ -39,4 +41,4 @@ const showBigPicture = (data) => {
   bigPictureDescription.textContent = description;
 };
 
-export { showBigPicture, renderBigComments };
+export { showBigPicture, renderBigComments, createBigPictureComment };
