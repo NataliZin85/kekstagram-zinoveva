@@ -1,4 +1,4 @@
-import { openBigPicture } from './picturePopup.js';
+import { openBigPicture } from './bigPictureModal.js';
 import { isEnterKey } from './util.js';
 
 const userPictures = document.querySelector('.pictures');
