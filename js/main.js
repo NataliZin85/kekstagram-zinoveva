@@ -4,5 +4,6 @@ import { renderMiniPictures } from './miniPictures.js';
 import './bigPictureModal.js';
 import './bigPicture.js';
 import './bigPictureComments.js';
+import './form.js';
 
 renderMiniPictures(createObjects()); // чтобы модули оставались независимыми
