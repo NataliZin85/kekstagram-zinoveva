@@ -127,15 +127,11 @@ const validateHashtagsItemsCount = (hashtagString) => {
 };
 
 // Сообщение об ошибки - хэш-тег;
-const getHashtagErrorMessage = () => 'Invalid hashtag.';
+const getHashtagErrorMessage = () => 'Invalid hashtag';
 
-// длина комментария не может составлять больше 140 символов;
-const validateDescription = (value) => value.length === 0 || value.length <= 140;
-
-pristine.addValidator(imgUploadDescription, validateDescription, 'От 2 до 140 символов');
-pristine.addValidator(imgUploadHashtag, validateNoDuplicateHashtags, 'Ensure no duplicate hashtags', 2 ,false);
+pristine.addValidator(imgUploadHashtag, validateNoDuplicateHashtags, 'Повторяющийся хэш-тег', 2 ,false);
 pristine.addValidator(imgUploadHashtag, validateHashtag, getHashtagErrorMessage);
-pristine.addValidator(imgUploadHashtag, validateHashtagsItemsCount , 'Ensure no more then 5 hashtags', 2 ,false);
+pristine.addValidator(imgUploadHashtag, validateHashtagsItemsCount , 'Не более 5-ти хеш-тегов', 2 ,false);
 
 form.addEventListener('submit', (evt) => {
   evt.preventDefault();
