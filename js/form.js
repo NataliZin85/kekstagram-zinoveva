@@ -84,7 +84,13 @@ imgUploadFormExit.addEventListener('keydown', (evt) => {
 });
 
 // валидация
-const pristine = new Pristine(imgUploadForm, {classTo: 'img-upload__form'}, false);
+const pristine = new Pristine(imgUploadForm, {
+  classTo: 'img-upload__form',
+  errorTextParent: 'img-upload__field-wrapper'
+});
+
+const hashtag = /^#[a-zа-яё0-9]{1,19}$/i;
+const validateRegex = (str) => hashtag.test(str);
 
 // хэш-тег начинается с символа # (решётка);
 // строка после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи и т. д.;
@@ -92,29 +98,28 @@ const pristine = new Pristine(imgUploadForm, {classTo: 'img-upload__form'}, fals
 // максимальная длина одного хэш-тега 20 символов, включая решётку;
 // хэш-теги нечувствительны к регистру: #ХэшТег и #хэштег считаются одним и тем же тегом;
 const validateHashtag = (hashtagString) => {
-  const hashtag = /^#[a-zа-яё0-9]{1,19}$/i;
-
-  const validateRegex = (str) => hashtag.test(str);
-
-  const hashtagItems = hashtagString.split(' ');
-  for (const hashtagItem of hashtagItems) {
-    if (!validateRegex(hashtagItem)) {
-      return false; // Hash tags are invalid
+  if (hashtagString) {
+    const hashtagItems = hashtagString.trim().split(' ');
+    for (const hashtagItem of hashtagItems) {
+      if (!validateRegex(hashtagItem)) {
+        return false; // Hash tags are invalid
+      }
     }
   }
+
   return true; //Hash tags are valid
 };
 
 // один и тот же хэш-тег не может быть использован дважды;
 const validateNoDuplicateHashtags = (hashtagString) => {
-  const hashtagItems = hashtagString.split(' ').map((item) => item.toLowerCase());
+  const hashtagItems = hashtagString.trim().split(' ').map((item) => item.toLowerCase());
   const hashtagItemsSet = new Set(hashtagItems);
   return hashtagItems.length === hashtagItemsSet.size;
 };
 
 // нельзя указать больше пяти хэш-тегов;
 const validateHashtagsItemsCount = (hashtagString) => {
-  const isLessThanMaxHT = hashtagString.split(' ').length <= MAX_HASHTAGS_LENGTH;
+  const isLessThanMaxHT = hashtagString.trim().split(' ').length <= MAX_HASHTAGS_LENGTH;
   if (!isLessThanMaxHT) {
     return false; // Ensure no more then 5 hashtags
   }
@@ -125,7 +130,7 @@ const validateHashtagsItemsCount = (hashtagString) => {
 const getHashtagErrorMessage = () => 'Invalid hashtag.';
 
 // длина комментария не может составлять больше 140 символов;
-const validateDescription = (value) => value.length >= 2 && value.length <= 140;
+const validateDescription = (value) => value.length === 0 || value.length <= 140;
 
 pristine.addValidator(imgUploadDescription, validateDescription, 'От 2 до 140 символов');
 pristine.addValidator(imgUploadHashtag, validateNoDuplicateHashtags, 'Ensure no duplicate hashtags', 2 ,false);
