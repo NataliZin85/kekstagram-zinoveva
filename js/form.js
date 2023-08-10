@@ -1,13 +1,14 @@
 import { isEscapeKey, isEnterKey } from './util.js';
+// import { replaceImageUploadPreview } from './imagePreview.js';
 
 const body = document.querySelector('body');
 const form = document.querySelector('#upload-select-image');
+const imageUploadPreview = form.querySelector('.img-upload__preview img');
 const imgUploadFormExit = form.querySelector('.img-upload__cancel');
 const imgUploadForm = form.querySelector('.img-upload__overlay');
 const imgUpload = form.querySelector('.img-upload__input');
 const imgUploadTarget = document.querySelector('.img-upload__start');
 const imgUploadHashtag = imgUploadForm.querySelector('.text__hashtags');
-const imgUploadDescription = imgUploadForm.querySelector('.text__description');
 
 const MAX_HASHTAGS_LENGTH = 5;
 
@@ -31,6 +32,9 @@ imgUpload.addEventListener('change', (evt) => {
     console.log(`Size: ${ files[i].size } bytes`);
     if (validateFile(files[i])) {
       openImgUploadForm();
+      // imageUploadPreview.src = files[i].name;
+      // console.log(imageUploadPreview);
+      // replaceImageUploadPreview(files[i]);
     }
   }
 }, false);
@@ -65,6 +69,7 @@ function openImgUploadForm () {
   imgUploadForm.classList.remove('hidden');
   body.classList.add('modal-open');
   imgUpload.addEventListener('keydown', onDocumentKeydown);
+  // renderImageUploadPreview();
 }
 
 function closeImgUploadForm () {
