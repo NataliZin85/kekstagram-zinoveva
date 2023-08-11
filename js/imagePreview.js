@@ -5,25 +5,29 @@ const imgUploadScale = form.querySelector('.img-upload__scale');
 const scaleControlSmaller = imgUploadScale.querySelector('.scale__control--smaller');
 const scaleControlBigger = imgUploadScale.querySelector('.scale__control--bigger');
 const scaleControlValue = imgUploadScale.querySelector('.scale__control--value');
+
 const SCALE_CONTROL_VALUE_CHANGE = 25;
 const MAX_CONTROL_VALUE = 100;
 const MIN_CONTROL_VALUE = 25;
-let CURRENT_SCALE_CONTROL_VALUE = 100;
+
+let currentScaleControlValue = 100;
 
 // обработчик масштаба фотографии
 scaleControlSmaller.onclick = function () {
-  CURRENT_SCALE_CONTROL_VALUE = CURRENT_SCALE_CONTROL_VALUE - SCALE_CONTROL_VALUE_CHANGE;
-  if (CURRENT_SCALE_CONTROL_VALUE >= MIN_CONTROL_VALUE && CURRENT_SCALE_CONTROL_VALUE <= MAX_CONTROL_VALUE) {
-    scaleControlValue.value = `${ CURRENT_SCALE_CONTROL_VALUE }%`;
-    imageUploadPreview.style.transform = `scale(${ CURRENT_SCALE_CONTROL_VALUE * 0.01 })`;
+  const newCurrentScaleControlValue = currentScaleControlValue - SCALE_CONTROL_VALUE_CHANGE;
+  if (newCurrentScaleControlValue >= MIN_CONTROL_VALUE && newCurrentScaleControlValue <= MAX_CONTROL_VALUE) {
+    currentScaleControlValue = newCurrentScaleControlValue;
+    scaleControlValue.value = `${ currentScaleControlValue }%`;
+    imageUploadPreview.style.transform = `scale(${ currentScaleControlValue * 0.01 })`;
   }
 };
 
 scaleControlBigger.onclick = function () {
-  CURRENT_SCALE_CONTROL_VALUE = CURRENT_SCALE_CONTROL_VALUE + SCALE_CONTROL_VALUE_CHANGE;
-  if (CURRENT_SCALE_CONTROL_VALUE >= MIN_CONTROL_VALUE && CURRENT_SCALE_CONTROL_VALUE <= MAX_CONTROL_VALUE) {
-    scaleControlValue.value = `${ CURRENT_SCALE_CONTROL_VALUE }%`;
-    imageUploadPreview.style.transform = `scale(${ CURRENT_SCALE_CONTROL_VALUE * 0.01 })`;
+  const newCurrentScaleControlValue = currentScaleControlValue + SCALE_CONTROL_VALUE_CHANGE;
+  if (newCurrentScaleControlValue >= MIN_CONTROL_VALUE && newCurrentScaleControlValue <= MAX_CONTROL_VALUE) {
+    currentScaleControlValue = newCurrentScaleControlValue;
+    scaleControlValue.value = `${ currentScaleControlValue }%`;
+    imageUploadPreview.style.transform = `scale(${ currentScaleControlValue * 0.01 })`;
   }
 };
 
