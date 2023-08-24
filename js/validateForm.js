@@ -1,11 +1,17 @@
 const form = document.querySelector('#upload-select-image');
-const imgUploadForm = form.querySelector('.img-upload__overlay');
-const imgUploadHashtag = imgUploadForm.querySelector('.text__hashtags');
+const imgUploadOverlay = form.querySelector('.img-upload__overlay');
+const imgUploadHashtag = imgUploadOverlay.querySelector('.text__hashtags');
+const imgUploadFormButton = form.querySelector('.img-upload__submit');
 
 const MAX_HASHTAGS_LENGTH = 5;
 
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Опубликую...'
+};
+
 // валидация формы
-const pristine = new Pristine(imgUploadForm, {
+const pristine = new Pristine(form, {
   classTo: 'img-upload__form',
   errorTextParent: 'img-upload__field-wrapper'
 });
@@ -16,12 +22,23 @@ const pristine = new Pristine(imgUploadForm, {
 // максимальная длина одного хэш-тега 20 символов, включая решётку;
 // хэш-теги нечувствительны к регистру: #ХэшТег и #хэштег считаются одним и тем же тегом;
 const hashtag = /^#[a-zа-яё0-9]{1,19}$/i;
+const ErrorText = {
+  INVALID_COUNT: `Максимум ${MAX_HASHTAGS_LENGTH} хэштегов`,
+  NOT_UNIQUE: 'Повторяющийся хэштег. Хэштеги должны быть уникальными',
+  INVALID_HASHTAG: 'Неправельный хэштег. Хэштег должен начинаться с символа "#" и состоять из букв и чисел',
+};
+
+const normalizeHashtag = (tagString) => tagString
+  .trim()
+  .split(' ')
+  .filter((tag) => Boolean(tag.length)); // берет только заполненные хэштеги. пробелы неучитывает
+
 const validateRegex = (str) => hashtag.test(str);
 
 // валидация самого хештега
 const validateHashtag = (oneHashtag) => {
   if (oneHashtag) {
-    const hashtagItems = oneHashtag.trim().split(' ');
+    const hashtagItems = normalizeHashtag(oneHashtag);
     for (const hashtagItem of hashtagItems) {
       if (!validateRegex(hashtagItem)) {
         return false;
@@ -33,33 +50,44 @@ const validateHashtag = (oneHashtag) => {
 
 // один и тот же хэш-тег не может быть использован дважды;
 const validateNoDuplicateHashtags = (hashtagsString) => {
-  const hashtagItems = hashtagsString.trim().split(' ').map((item) => item.toLowerCase());
+  const hashtagItems = normalizeHashtag(hashtagsString).map((item) => item.toLowerCase());
   const hashtagItemsSet = new Set(hashtagItems);
   return hashtagItems.length === hashtagItemsSet.size;
 };
 
 // нельзя указать больше пяти хэш-тегов в поле ввода;
-const validateHashtagsItemsCount = (hashtagsString) => {
-  const isLessThanMaxHT = hashtagsString.trim().split(' ').length <= MAX_HASHTAGS_LENGTH;
-  if (!isLessThanMaxHT) {
-    return false; // Ensure no more then 5 hashtags
-  }
-  return true;
+const validateHashtagsItemsCount = (hashtagsString) => normalizeHashtag(hashtagsString).length <= MAX_HASHTAGS_LENGTH;
+
+pristine.addValidator(imgUploadHashtag, validateNoDuplicateHashtags, ErrorText.NOT_UNIQUE, 1 ,true);
+pristine.addValidator(imgUploadHashtag, validateHashtag, ErrorText.INVALID_HASHTAG, 2, true);
+pristine.addValidator(imgUploadHashtag, validateHashtagsItemsCount , ErrorText.INVALID_COUNT, 3 ,true);
+
+const blockSubmitButton = () => {
+  imgUploadFormButton.disabled = true;
+  imgUploadFormButton.textContent = SubmitButtonText.SENDING;
 };
 
-// Сообщение об ошибки - хэш-тег;
-const getHashtagErrorMessage = () => 'Invalid hashtag';
+const unblockSubmitButton = () => {
+  imgUploadFormButton.disabled = false;
+  imgUploadFormButton.textContent = SubmitButtonText.IDLE;
+};
 
-pristine.addValidator(imgUploadHashtag, validateNoDuplicateHashtags, 'Повторяющийся хэш-тег', 2 ,false);
-pristine.addValidator(imgUploadHashtag, validateHashtag, getHashtagErrorMessage);
-pristine.addValidator(imgUploadHashtag, validateHashtagsItemsCount , 'Не более 5-ти хеш-тегов', 2 ,false);
+const resetForm = () => {
+  pristine.reset();
+  form.reset();
+};
 
-form.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  const isValid = pristine.validate();
-  if (isValid) {
-    console.log('Форма валидна');
-  } else {
-    console.log('Форма невалидна');
-  }
-});
+const setOnUploadFormSubmit = (callback) => {
+  form.addEventListener('submit', async (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+
+    if (isValid) {
+      blockSubmitButton();
+      await callback(new FormData(form));
+      unblockSubmitButton();
+    }
+  });
+};
+
+export { setOnUploadFormSubmit, resetForm };

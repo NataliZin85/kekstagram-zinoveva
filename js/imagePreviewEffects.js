@@ -12,16 +12,16 @@ const effectSepia = form.querySelector('#effect-sepia');
 const effectMarvin = form.querySelector('#effect-marvin');
 const effectPhobos = form.querySelector('#effect-phobos');
 const effectHeat = form.querySelector('#effect-heat');
+// const effectGroup = form.querySelector('.effects');
 
 let effectName = '';
-imgEffectLevelValue.value = 100;
+const DEFAULT_EFFECT_LEVEL_VALUE = 100;
+imgEffectLevelValue.value = DEFAULT_EFFECT_LEVEL_VALUE;
 
 // функция учитывающая разность фильтров и их значений
 const getFilterValue = () => {
   let effect = `${effectName}(${imgEffectLevelValue.value})`;
   switch (effectName) {
-    case 'grayscale':
-      break;
     case 'invert':
       effect = `${effectName}(${imgEffectLevelValue.value}%)`;
       break;
@@ -59,6 +59,20 @@ imgEffectLevelSlider.noUiSlider.on('update', () => {
   imageUploadPreview.style.filter = getFilterValue(effectName);
 });
 
+// обнуление эффектов
+const resetEffects = () => {
+  imgEffectLevelSlider.noUiSlider.updateOptions({
+    range: {
+      min: 0,
+      max: 100,
+    },
+    step: 1
+  });
+  imgEffectLevelSlider.noUiSlider.set(100);
+  imgEffectLevelSlider.setAttribute('disabled', true);
+  imageUploadPreview.style.filter = null;
+};
+
 // image effects
 effectChrome.addEventListener('change', (evt) => {
   if (evt.target.checked) {
@@ -72,16 +86,6 @@ effectChrome.addEventListener('change', (evt) => {
       start: 1,
       step: 0.1
     });
-  } else {
-    imgEffectLevelSlider.noUiSlider.updateOptions({
-      range: {
-        min: 0,
-        max: 100,
-      },
-      step: 1
-    });
-    imgEffectLevelSlider.noUiSlider.set(100);
-    imageUploadPreview.style.filter = 'none';
   }
 });
 
@@ -97,16 +101,6 @@ effectSepia.addEventListener('change', (evt) => {
       start: 1,
       step: 0.1
     });
-  } else {
-    imgEffectLevelSlider.noUiSlider.updateOptions({
-      range: {
-        min: 0,
-        max: 100,
-      },
-      step: 1
-    });
-    imgEffectLevelSlider.noUiSlider.set(100);
-    imageUploadPreview.style.filter = 'none';
   }
 });
 
@@ -122,16 +116,6 @@ effectMarvin.addEventListener('change', (evt) => {
       start: 100,
       step: 1
     });
-  } else {
-    imgEffectLevelSlider.noUiSlider.updateOptions({
-      range: {
-        min: 0,
-        max: 100,
-      },
-      step: 1
-    });
-    imgEffectLevelSlider.noUiSlider.set(100);
-    imageUploadPreview.style.filter = 'none';
   }
 });
 
@@ -147,16 +131,6 @@ effectPhobos.addEventListener('change', (evt) => {
       start: 3,
       step: 0.1
     });
-  } else {
-    imgEffectLevelSlider.noUiSlider.updateOptions({
-      range: {
-        min: 0,
-        max: 100,
-      },
-      step: 1
-    });
-    imgEffectLevelSlider.noUiSlider.set(100);
-    imageUploadPreview.style.filter = 'none';
   }
 });
 
@@ -172,31 +146,14 @@ effectHeat.addEventListener('change', (evt) => {
       start: 3,
       step: 0.1
     });
-  } else {
-    imgEffectLevelSlider.noUiSlider.updateOptions({
-      range: {
-        min: 0,
-        max: 100,
-      },
-      step: 1
-    });
-    imgEffectLevelSlider.noUiSlider.set(100);
-    imageUploadPreview.style.filter = 'none';
   }
 });
 
 effectNone.addEventListener('change', (evt) => {
   if (evt.target.checked) {
     effectName = effectNone.id;
-    imgEffectLevelSlider.noUiSlider.updateOptions({
-      range: {
-        min: 0,
-        max: 100,
-      },
-      step: 1
-    });
-    imgEffectLevelSlider.noUiSlider.set(100);
-    imgEffectLevelSlider.setAttribute('disabled', true);
-    imageUploadPreview.style.filter = 'none';
+    resetEffects ();
   }
 });
+
+export { resetEffects };
