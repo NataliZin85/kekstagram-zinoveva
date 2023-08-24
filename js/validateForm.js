@@ -1,6 +1,6 @@
 const form = document.querySelector('#upload-select-image');
-const imgUploadForm = form.querySelector('.img-upload__overlay');
-const imgUploadHashtag = imgUploadForm.querySelector('.text__hashtags');
+const imgUploadOverlay = form.querySelector('.img-upload__overlay');
+const imgUploadHashtag = imgUploadOverlay.querySelector('.text__hashtags');
 const imgUploadFormButton = form.querySelector('.img-upload__submit');
 
 const MAX_HASHTAGS_LENGTH = 5;
@@ -11,7 +11,7 @@ const SubmitButtonText = {
 };
 
 // валидация формы
-const pristine = new Pristine(imgUploadForm, {
+const pristine = new Pristine(form, {
   classTo: 'img-upload__form',
   errorTextParent: 'img-upload__field-wrapper'
 });
@@ -72,17 +72,22 @@ const unblockSubmitButton = () => {
   imgUploadFormButton.textContent = SubmitButtonText.IDLE;
 };
 
+const resetForm = () => {
+  pristine.reset();
+  form.reset();
+};
+
 const setOnUploadFormSubmit = (callback) => {
-  imgUploadForm.addEventListener('submit', async (evt) => {
+  form.addEventListener('submit', async (evt) => {
     evt.preventDefault();
     const isValid = pristine.validate();
 
     if (isValid) {
       blockSubmitButton();
-      await callback(new FormData(imgUploadForm));
+      await callback(new FormData(form));
       unblockSubmitButton();
     }
   });
 };
 
-export { setOnUploadFormSubmit };
+export { setOnUploadFormSubmit, resetForm };

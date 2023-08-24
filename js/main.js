@@ -1,5 +1,4 @@
 import { showAlertMessage } from './util.js';
-import './data.js';
 import { renderMiniPictures } from './miniPictures.js';
 import './bigPictureModal.js';
 import './bigPicture.js';
@@ -8,7 +7,7 @@ import { setOnUploadFormSubmit } from './validateForm.js';
 import { closeImgUploadForm } from './validateOpenForm.js';
 import './imagePreview.js';
 import './imagePreviewEffects.js';
-import { getData } from './fetch-data.js';
+import {getData, sendData} from './fetch-data.js';
 import { showSuccessMessage, showErrorMessage } from './pictureFormSubmitMessage.js';
 
 getData()
@@ -19,9 +18,9 @@ getData()
     showAlertMessage(err.message);
   });
 
-setOnUploadFormSubmit (async (data) => {
+setOnUploadFormSubmit(async (data) => {
   try {
-    await getData (data);
+    await sendData(data);
     closeImgUploadForm();
     showSuccessMessage();
   } catch {
