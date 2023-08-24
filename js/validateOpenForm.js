@@ -1,5 +1,5 @@
 import { isEscapeKey, isEnterKey } from './util.js';
-import './validateForm.js';
+import { resetForm } from './validateForm.js';
 import { resetScale } from './imagePreview.js';
 import { resetEffects } from './imagePreviewEffects.js';
 
@@ -52,6 +52,7 @@ imgUploadTarget.addEventListener('drop', (evt) => {
     console.log(`Size: ${ files[0].size } bytes`);
     if (validateFile(files[0])) {
       openImgUploadForm();
+      imgUpload.files = files;
     }
   } else {
     alert('Допускается не более одного файла');
@@ -76,14 +77,13 @@ function openImgUploadForm () {
   imgUploadForm.classList.remove('hidden');
   body.classList.add('modal-open');
   imgEffectLevelSlider.setAttribute('disabled', true);
-  imgUpload.addEventListener('keydown', onDocumentKeydown);
+  document.addEventListener('keydown', onDocumentKeydown);
 }
 
 function closeImgUploadForm () {
-  form.reset();
+  resetForm();
   resetScale();
   resetEffects ();
-  // pristine.reset();
   imgUploadForm.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
