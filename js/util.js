@@ -18,7 +18,8 @@ const showAlertMessage = (message) => {
   alertMessage.style.zIndex = '100';
   alertMessage.style.position = 'absolute';
   alertMessage.style.height = 'max-content';
-  alertMessage.style.left = `calc(50% - ${alertMessage.length}px)`;
+  alertMessage.style.left = '0';
+  alertMessage.style.right = '0';
   alertMessage.style.top = '40%';
   alertMessage.style.padding = '10px 3px';
   alertMessage.style.fontSize = '30px';
