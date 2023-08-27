@@ -15,8 +15,6 @@ import { getFilteredPictures, init } from './filterMiniPictures.js';
 getData()
   .then((uploadPicture) => {
     renderMiniPictures(uploadPicture);
-    // getRandomFilter(() => (renderMiniPictures(uploadPicture)));
-    // getRandomMiniPictures((uploadPicture) => renderMiniPictures(uploadPicture));
   })
   .catch((err) => {
     showAlertMessage(err.message);
@@ -40,9 +38,3 @@ try {
 } catch (err) {
   showAlertMessage('Попробуйте нажать на кнопку');
 }
-//   try {
-//     await sendData (data);
-//   } catch {
-//     showAlertMessage('Попробуйте нажать на кнопку');
-//   }
-// });

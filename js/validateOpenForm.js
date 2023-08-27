@@ -7,7 +7,8 @@ const body = document.querySelector('body');
 const form = document.querySelector('#upload-select-image');
 const imgUploadFormExit = form.querySelector('.img-upload__cancel');
 const imgUploadForm = form.querySelector('.img-upload__overlay');
-const imgUpload = form.querySelector('.img-upload__input');
+const imgUpload = document.querySelector('.img-upload__start input[type=file]');
+const previewUploadImg = document.querySelector('.img-upload__preview img');
 const imgUploadTarget = document.querySelector('.img-upload__start');
 const imgEffectLevelSlider = form.querySelector('.effect-level__slider');
 const imgUploadHashtag = imgUploadForm.querySelector('.text__hashtags');
@@ -29,12 +30,10 @@ const validateFile = (file) => {
 imgUpload.addEventListener('change', (evt) => {
   evt.preventDefault();
 
-  const file = imgUpload.file;
-  console.log(`Filename: ${ file[0].name}`);
-  console.log(`Type: ${ file[0].type}`);
-  console.log(`Size: ${ file[0].size } bytes`);
+  const file = imgUpload.files;
   if (validateFile(file[0])) {
     openImgUploadForm();
+    previewUploadImg.src = URL.createObjectURL(file[0]);
   }
 });
 
@@ -47,12 +46,9 @@ imgUploadTarget.addEventListener('drop', (evt) => {
 
   const files = evt.dataTransfer.files;
   if (files.length === 1) {
-    console.log(`Filename: ${ files[0].name}`);
-    console.log(`Type: ${ files[0].type}`);
-    console.log(`Size: ${ files[0].size } bytes`);
     if (validateFile(files[0])) {
       openImgUploadForm();
-      imgUpload.files = files;
+      previewUploadImg.src = URL.createObjectURL(files[0]);
     }
   } else {
     alert('Допускается не более одного файла');
