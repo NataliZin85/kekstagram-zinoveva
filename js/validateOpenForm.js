@@ -29,7 +29,7 @@ const validateFile = (file) => {
 imgUpload.addEventListener('change', (evt) => {
   evt.preventDefault();
 
-  const file = imgUpload.files;
+  const file = imgUpload.file;
   console.log(`Filename: ${ file[0].name}`);
   console.log(`Type: ${ file[0].type}`);
   console.log(`Size: ${ file[0].size } bytes`);
@@ -59,7 +59,7 @@ imgUploadTarget.addEventListener('drop', (evt) => {
   }
 });
 
-const isTextFieldFocuse = () =>
+const isTextFieldFocus = () =>
   document.activeElement === imgUploadHashtag ||
   document.activeElement === imgUploadComments;
 
@@ -67,7 +67,7 @@ const isErrorMessageShown = () => Boolean(document.querySelector('.error'));
 
 // открытие и закрытие окна для редактирования фотографии
 const onDocumentKeydown = (evt) => {
-  if (isEscapeKey(evt) && !isTextFieldFocuse() && !isErrorMessageShown()) {
+  if (isEscapeKey(evt) && !isTextFieldFocus() && !isErrorMessageShown()) {
     evt.preventDefault();
     closeImgUploadForm();
   }

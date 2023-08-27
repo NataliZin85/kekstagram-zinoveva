@@ -25,7 +25,7 @@ const hashtag = /^#[a-zа-яё0-9]{1,19}$/i;
 const ErrorText = {
   INVALID_COUNT: `Максимум ${MAX_HASHTAGS_LENGTH} хэштегов`,
   NOT_UNIQUE: 'Повторяющийся хэштег. Хэштеги должны быть уникальными',
-  INVALID_HASHTAG: 'Неправельный хэштег. Хэштег должен начинаться с символа "#" и состоять из букв и чисел',
+  INVALID_HASHTAG: 'Неправильный хэштег. Хэштег должен начинаться с символа "#" и состоять из букв и чисел',
 };
 
 const normalizeHashtag = (tagString) => tagString
