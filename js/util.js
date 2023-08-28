@@ -1,4 +1,5 @@
 const ALERT_SHOW_TIME = 5000;
+const DEBAUNCE_DELAY = 500;
 
 const getRandomInteger = (a, b) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -35,10 +36,19 @@ const showAlertMessage = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
+const debaunce = (callback, timeoutDelay = DEBAUNCE_DELAY) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
 export {
   getRandomArrayElement,
   getRandomInteger,
   isEscapeKey,
   isEnterKey,
   showAlertMessage,
+  debaunce
 };

@@ -1,4 +1,4 @@
-import { openBigPicture } from './bigPictureModal.js';
+import { openBigPicture } from './big-picture-modal.js';
 import { isEnterKey } from './util.js';
 
 const userPictures = document.querySelector('.pictures');
@@ -36,7 +36,9 @@ const createMiniPicture = (data) => {
 
 // добавление клонированных изображений в контейнер ".pictures"
 const renderMiniPictures = (pictures) => {
+  userPictures.querySelectorAll('.picture').forEach((element) => element.remove());
   const fragment = document.createDocumentFragment();
+
   pictures.forEach((picture) => {
     const miniPictureObject = createMiniPicture(picture);
     fragment.append(miniPictureObject);

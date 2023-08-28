@@ -1,8 +1,3 @@
-const form = document.querySelector('#upload-select-image');
-const imgUploadOverlay = form.querySelector('.img-upload__overlay');
-const imgUploadHashtag = imgUploadOverlay.querySelector('.text__hashtags');
-const imgUploadFormButton = form.querySelector('.img-upload__submit');
-
 const MAX_HASHTAGS_LENGTH = 5;
 
 const SubmitButtonText = {
@@ -10,23 +5,25 @@ const SubmitButtonText = {
   SENDING: 'Опубликую...'
 };
 
+const ErrorText = {
+  INVALID_COUNT: `Максимум ${MAX_HASHTAGS_LENGTH} хэштегов`,
+  NOT_UNIQUE: 'Повторяющийся хэштег. Хэштеги должны быть уникальными',
+  INVALID_HASHTAG: 'Неправильный хэштег. Хэштег должен начинаться с символа "#" и состоять из букв и чисел',
+};
+
+const form = document.querySelector('#upload-select-image');
+const imgUploadOverlay = form.querySelector('.img-upload__overlay');
+const imgUploadHashtag = imgUploadOverlay.querySelector('.text__hashtags');
+const imgUploadFormButton = form.querySelector('.img-upload__submit');
+
 // валидация формы
 const pristine = new Pristine(form, {
   classTo: 'img-upload__form',
   errorTextParent: 'img-upload__field-wrapper'
 });
 
-// хэш-тег начинается с символа # (решётка);
-// строка после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи и т. д.;
-// хеш-тег не может состоять только из одной решётки;
-// максимальная длина одного хэш-тега 20 символов, включая решётку;
-// хэш-теги нечувствительны к регистру: #ХэшТег и #хэштег считаются одним и тем же тегом;
+// хэш-тег допустимая форма
 const hashtag = /^#[a-zа-яё0-9]{1,19}$/i;
-const ErrorText = {
-  INVALID_COUNT: `Максимум ${MAX_HASHTAGS_LENGTH} хэштегов`,
-  NOT_UNIQUE: 'Повторяющийся хэштег. Хэштеги должны быть уникальными',
-  INVALID_HASHTAG: 'Неправельный хэштег. Хэштег должен начинаться с символа "#" и состоять из букв и чисел',
-};
 
 const normalizeHashtag = (tagString) => tagString
   .trim()
