@@ -1,16 +1,15 @@
 import { showAlertMessage, debaunce } from './util.js';
-import './data.js';
-import { renderMiniPictures } from './miniPictures.js';
-import './bigPictureModal.js';
-import './bigPicture.js';
-import './bigPictureComments.js';
-import { setOnUploadFormSubmit } from './validateForm.js';
-import { closeImgPreviewForm } from './validateOpenForm.js';
-import './imagePreview.js';
-import './imagePreviewEffects.js';
+import { renderMiniPictures } from './mini-pictures.js';
+import './big-picture-modal.js';
+import './big-picture.js';
+import './big-picture-comments.js';
+import { setOnUploadFormSubmit } from './validate-form.js';
+import { closeImgPreviewForm } from './validate-open-form.js';
+import './image-preview.js';
+import './image-preview-effects.js';
 import { getData, sendData } from './fetch-data.js';
-import { showSuccessMessage, showErrorMessage } from './pictureFormSubmitMessage.js';
-import { getFilteredPictures, initUploadImgFilters } from './filterMiniPictures.js';
+import { showSuccessMessage, showErrorMessage } from './picture-form-submit-message.js';
+import { getFilteredPictures, initUploadImgFilters } from './filter-mini-pictures.js';
 
 getData()
   .then((data) => {

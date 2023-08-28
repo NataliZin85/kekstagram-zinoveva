@@ -1,15 +1,16 @@
 import { isEscapeKey, isEnterKey, showAlertMessage } from './util.js';
-import { resetForm } from './validateForm.js';
-import { resetScale } from './imagePreview.js';
-import { resetEffects } from './imagePreviewEffects.js';
+import { resetForm } from './validate-form.js';
+import { resetScale } from './image-preview.js';
+import { resetEffects } from './image-preview-effects.js';
 
 const body = document.querySelector('body');
 const form = document.querySelector('#upload-select-image');
 const imgPreviewFormExit = form.querySelector('.img-upload__cancel');
 const imgUploadOverlay = form.querySelector('.img-upload__overlay');
 const imgUpload = document.querySelector('.img-upload__start input[type=file]');
-const previewUploadImg = document.querySelector('.img-upload__preview img');
-const imgUploadTarget = document.querySelector('.img-upload__start');
+const previewUploadImg = form.querySelector('.img-upload__preview img');
+const effectsImgPreviews = form.querySelectorAll('.effects__preview');
+const imgUploadTarget = form.querySelector('.img-upload__start');
 const imgEffectLevelSlider = form.querySelector('.effect-level__slider');
 const imgUploadHashtag = imgUploadOverlay.querySelector('.text__hashtags');
 const imgUploadComments = imgUploadOverlay.querySelector('.text__comments');
@@ -34,6 +35,9 @@ imgUpload.addEventListener('change', (evt) => {
   if (validateFile(file[0])) {
     openImgPreviewForm();
     previewUploadImg.src = URL.createObjectURL(file[0]);
+    effectsImgPreviews.forEach((preview) => {
+      preview.style.backgroundImage = `url('${previewUploadImg.src}')`;
+    });
   }
 });
 
@@ -49,6 +53,9 @@ imgUploadTarget.addEventListener('drop', (evt) => {
     if (validateFile(files[0])) {
       openImgPreviewForm();
       previewUploadImg.src = URL.createObjectURL(files[0]);
+      effectsImgPreviews.forEach((preview) => {
+        preview.style.backgroundImage = `url('${previewUploadImg.src}')`;
+      });
     }
   } else {
     showAlertMessage('Допускается не более одного файла');

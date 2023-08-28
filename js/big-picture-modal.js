@@ -1,6 +1,6 @@
 import { isEscapeKey, isEnterKey } from './util.js';
-import { showBigPicture } from './bigPicture.js';
-import { renderBigComments } from './bigPictureComments.js';
+import { showBigPicture } from './big-picture.js';
+import { renderBigComments } from './big-picture-comments.js';
 
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureExit = document.querySelector('#picture-cancel');
