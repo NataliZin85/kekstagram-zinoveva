@@ -1,18 +1,18 @@
-import { isEscapeKey, isEnterKey } from './util.js';
+import { isEscapeKey, isEnterKey, showAlertMessage } from './util.js';
 import { resetForm } from './validateForm.js';
 import { resetScale } from './imagePreview.js';
 import { resetEffects } from './imagePreviewEffects.js';
 
 const body = document.querySelector('body');
 const form = document.querySelector('#upload-select-image');
-const imgUploadFormExit = form.querySelector('.img-upload__cancel');
-const imgUploadForm = form.querySelector('.img-upload__overlay');
+const imgPreviewFormExit = form.querySelector('.img-upload__cancel');
+const imgUploadOverlay = form.querySelector('.img-upload__overlay');
 const imgUpload = document.querySelector('.img-upload__start input[type=file]');
 const previewUploadImg = document.querySelector('.img-upload__preview img');
 const imgUploadTarget = document.querySelector('.img-upload__start');
 const imgEffectLevelSlider = form.querySelector('.effect-level__slider');
-const imgUploadHashtag = imgUploadForm.querySelector('.text__hashtags');
-const imgUploadComments = imgUploadForm.querySelector('.text__comments');
+const imgUploadHashtag = imgUploadOverlay.querySelector('.text__hashtags');
+const imgUploadComments = imgUploadOverlay.querySelector('.text__comments');
 
 // загрузка фотографий пользователя
 // проверка файла
@@ -21,7 +21,7 @@ const validateFile = (file) => {
   const fileExtension = file.type.split('/')[1];
   const isValidFile = allowedExtension.includes(fileExtension);
   if (!isValidFile) {
-    alert(`Подходящий формат файла: *.${ allowedExtension.join(', *.')}`);
+    showAlertMessage(`Подходящий формат файла: *.${ allowedExtension.join(', *.')}`);
   }
   return isValidFile;
 };
@@ -32,7 +32,7 @@ imgUpload.addEventListener('change', (evt) => {
 
   const file = imgUpload.files;
   if (validateFile(file[0])) {
-    openImgUploadForm();
+    openImgPreviewForm();
     previewUploadImg.src = URL.createObjectURL(file[0]);
   }
 });
@@ -47,52 +47,57 @@ imgUploadTarget.addEventListener('drop', (evt) => {
   const files = evt.dataTransfer.files;
   if (files.length === 1) {
     if (validateFile(files[0])) {
-      openImgUploadForm();
+      openImgPreviewForm();
       previewUploadImg.src = URL.createObjectURL(files[0]);
     }
   } else {
-    alert('Допускается не более одного файла');
+    showAlertMessage('Допускается не более одного файла');
   }
 });
 
+// проверка на фокус на полях с хэштегами и комментарием
 const isTextFieldFocus = () =>
   document.activeElement === imgUploadHashtag ||
   document.activeElement === imgUploadComments;
 
+// видимость ошибки
 const isErrorMessageShown = () => Boolean(document.querySelector('.error'));
 
 // открытие и закрытие окна для редактирования фотографии
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt) && !isTextFieldFocus() && !isErrorMessageShown()) {
     evt.preventDefault();
-    closeImgUploadForm();
+    closeImgPreviewForm();
   }
 };
 
-function openImgUploadForm () {
-  imgUploadForm.classList.remove('hidden');
+// открытие формы предпросмотра фотографии
+function openImgPreviewForm () {
+  imgUploadOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
   imgEffectLevelSlider.setAttribute('disabled', true);
   document.addEventListener('keydown', onDocumentKeydown);
 }
 
-function closeImgUploadForm () {
+// закрытие формы предпросмотра фотографии
+function closeImgPreviewForm () {
   resetForm();
   resetScale();
   resetEffects ();
-  imgUploadForm.classList.add('hidden');
+  imgUploadOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
-imgUploadFormExit.addEventListener('click', () => {
-  closeImgUploadForm();
+// кнопка закрытия формы предпросмотра фотографии
+imgPreviewFormExit.addEventListener('click', () => {
+  closeImgPreviewForm();
 });
 
-imgUploadFormExit.addEventListener('keydown', (evt) => {
+imgPreviewFormExit.addEventListener('keydown', (evt) => {
   if (isEnterKey(evt)) {
-    closeImgUploadForm();
+    closeImgPreviewForm();
   }
 });
 
-export { openImgUploadForm, closeImgUploadForm };
+export { openImgPreviewForm, closeImgPreviewForm };

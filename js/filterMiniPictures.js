@@ -1,8 +1,5 @@
 import { getRandomArrayElement } from './util.js';
 
-const filter = document.querySelector('.img-filters');
-const filterForm = filter.querySelector('.img-filters__form');
-
 const FilterId = {
   DEFAULT: 'filter-default',
   RANDOM: 'filter-random',
@@ -13,16 +10,20 @@ const MAX_RANDOM_PICTURE_COUNT = 10;
 let pictures = [];
 let currentFilterId = FilterId.DEFAULT;
 
+const filter = document.querySelector('.img-filters');
+const filterForm = filter.querySelector('.img-filters__form');
+
 const showFilter = () => {
   filter.classList.remove('img-filters--inactive');
 };
 
+// фильтры
 const compareCommentsLength = (pictureA, pictureB) => pictureB.comments.length - pictureA.comments.length;
 
-const selectRendomPictures = (a) => {
+const filterRendomPictures = (uploadPictures) => {
   const randomPictures = [];
   while (randomPictures.length < MAX_RANDOM_PICTURE_COUNT) {
-    const miniPicture = getRandomArrayElement(a);
+    const miniPicture = getRandomArrayElement(uploadPictures);
     if (!randomPictures.includes(miniPicture)) {
       randomPictures.push(miniPicture);
     }
@@ -30,9 +31,10 @@ const selectRendomPictures = (a) => {
   return randomPictures;
 };
 
+// функция применения нужного фильтра к фотографиям
 const getFilteredPictures = () => {
   if (currentFilterId === FilterId.RANDOM) {
-    return selectRendomPictures(pictures);
+    return filterRendomPictures(pictures);
   }
   if (currentFilterId === FilterId.MOST_DISCUSSED) {
     return [...pictures].sort(compareCommentsLength);
@@ -42,6 +44,7 @@ const getFilteredPictures = () => {
   }
 };
 
+// функция нажатия на кнопки с фильрами
 const setOnClickFilters = (cb) => {
   filterForm.addEventListener('click', (evt) => {
     if (!evt.target.classList.contains('img-filters__button')) {
@@ -62,11 +65,12 @@ const setOnClickFilters = (cb) => {
   });
 };
 
-const init = (uploadPictures, cb) => {
+// функция инициализации фильтров для загружаемых фотографий
+const initUploadImgFilters = (uploadPictures, cb) => {
   showFilter();
   pictures = [...uploadPictures];
   setOnClickFilters(cb);
 };
 
 
-export { getFilteredPictures, init };
+export { getFilteredPictures, initUploadImgFilters };
