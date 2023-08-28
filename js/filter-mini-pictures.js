@@ -1,12 +1,13 @@
 import { getRandomArrayElement } from './util.js';
 
+const MAX_RANDOM_PICTURE_COUNT = 10;
+
 const FilterId = {
   DEFAULT: 'filter-default',
   RANDOM: 'filter-random',
   MOST_DISCUSSED: 'filter-discussed',
 };
 
-const MAX_RANDOM_PICTURE_COUNT = 10;
 let pictures = [];
 let currentFilterId = FilterId.DEFAULT;
 

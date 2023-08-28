@@ -1,15 +1,14 @@
-const form = document.querySelector('#upload-select-image');
-const imageUploadPreview = form.querySelector('.img-upload__preview img');
-
-const imgUploadScale = form.querySelector('.img-upload__scale');
-const scaleControlSmaller = imgUploadScale.querySelector('.scale__control--smaller');
-const scaleControlBigger = imgUploadScale.querySelector('.scale__control--bigger');
-const scaleControlValue = imgUploadScale.querySelector('.scale__control--value');
-
 const SCALE_CONTROL_VALUE_CHANGE = 25;
 const MAX_CONTROL_VALUE = 100;
 const MIN_CONTROL_VALUE = 25;
 const DEFAULT_CONTROL_VALUE = 100;
+
+const form = document.querySelector('#upload-select-image');
+const imageUploadPreview = form.querySelector('.img-upload__preview img');
+const imgUploadScale = form.querySelector('.img-upload__scale');
+const scaleControlSmaller = imgUploadScale.querySelector('.scale__control--smaller');
+const scaleControlBigger = imgUploadScale.querySelector('.scale__control--bigger');
+const scaleControlValue = imgUploadScale.querySelector('.scale__control--value');
 
 let currentScaleControlValue = DEFAULT_CONTROL_VALUE;
 

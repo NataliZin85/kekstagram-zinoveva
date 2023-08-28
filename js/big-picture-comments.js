@@ -1,16 +1,17 @@
+const INITIAL_COMMENTS_COUNT = 5;
+const DEFAULT_STEP = 5;
+
 const bigPicture = document.querySelector('.big-picture');
 
 const bigPictureCommentTemplate = document.querySelector('#comment')
   .content
   .querySelector('.social__comment');
-const bigPictureComments = bigPicture.querySelector('.social__comments');
 
+const bigPictureComments = bigPicture.querySelector('.social__comments');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
 const bigPictureCurrentCommentsCount = bigPicture.querySelector('[data-current-comments-count]');
 const bigPictureTotalCommentsCount = bigPicture.querySelector('.comments-count');
 
-const INITIAL_COMMENTS_COUNT = 5;
-const DEFAULT_STEP = 5;
 let currentCountComment = 0;
 let totalCountComment = INITIAL_COMMENTS_COUNT;
 let commentElements = [];

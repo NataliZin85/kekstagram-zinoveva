@@ -1,6 +1,7 @@
+const DEFAULT_EFFECT_LEVEL_VALUE = 100;
+
 const form = document.querySelector('#upload-select-image');
 const imageUploadPreview = form.querySelector('.img-upload__preview img');
-
 const imgEffectLevel = form.querySelector('.effect-level');
 const imgEffectLevelValue = imgEffectLevel.querySelector('.effect-level__value');
 const imgEffectLevelSlider = imgEffectLevel.querySelector('.effect-level__slider');
@@ -12,10 +13,8 @@ const effectSepia = form.querySelector('#effect-sepia');
 const effectMarvin = form.querySelector('#effect-marvin');
 const effectPhobos = form.querySelector('#effect-phobos');
 const effectHeat = form.querySelector('#effect-heat');
-// const effectGroup = form.querySelector('.effects');
 
 let effectName = '';
-const DEFAULT_EFFECT_LEVEL_VALUE = 100;
 imgEffectLevelValue.value = DEFAULT_EFFECT_LEVEL_VALUE;
 
 // функция учитывающая разность фильтров и их значений
