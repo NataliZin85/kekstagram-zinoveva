@@ -52,6 +52,7 @@ imgUploadTarget.addEventListener('drop', (evt) => {
   if (files.length === 1) {
     if (validateFile(files[0])) {
       openImgPreviewForm();
+      imgUpload.files = files;
       previewUploadImg.src = URL.createObjectURL(files[0]);
       effectsImgPreviews.forEach((preview) => {
         preview.style.backgroundImage = `url('${previewUploadImg.src}')`;
