@@ -12,14 +12,14 @@ const ErrorText = {
 };
 
 const form = document.querySelector('#upload-select-image');
-const imgUploadOverlay = form.querySelector('.img-upload__overlay');
-const imgUploadHashtag = imgUploadOverlay.querySelector('.text__hashtags');
+const imgUploadHashtag = form.querySelector('.text__hashtags');
 const imgUploadFormButton = form.querySelector('.img-upload__submit');
 
 // валидация формы
 const pristine = new Pristine(form, {
-  classTo: 'img-upload__form',
-  errorTextParent: 'img-upload__field-wrapper'
+  classTo: 'img-upload__field-wrapper',
+  errorTextParent: 'img-upload__field-wrapper',
+  errorTextClass: 'img-upload__field-wrapper--error',
 });
 
 // хэш-тег допустимая форма

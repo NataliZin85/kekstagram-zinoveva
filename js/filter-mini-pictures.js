@@ -21,7 +21,7 @@ const showFilter = () => {
 // фильтры
 const compareCommentsLength = (pictureA, pictureB) => pictureB.comments.length - pictureA.comments.length;
 
-const filterRendomPictures = (uploadPictures) => {
+const filterRandomPictures = (uploadPictures) => {
   const randomPictures = [];
   while (randomPictures.length < MAX_RANDOM_PICTURE_COUNT) {
     const miniPicture = getRandomArrayElement(uploadPictures);
@@ -35,7 +35,7 @@ const filterRendomPictures = (uploadPictures) => {
 // функция применения нужного фильтра к фотографиям
 const getFilteredPictures = () => {
   if (currentFilterId === FilterId.RANDOM) {
-    return filterRendomPictures(pictures);
+    return filterRandomPictures(pictures);
   }
   if (currentFilterId === FilterId.MOST_DISCUSSED) {
     return [...pictures].sort(compareCommentsLength);
