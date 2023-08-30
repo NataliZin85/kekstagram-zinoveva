@@ -11,9 +11,9 @@ const imgUpload = document.querySelector('.img-upload__start input[type=file]');
 const previewUploadImg = form.querySelector('.img-upload__preview img');
 const effectsImgPreviews = form.querySelectorAll('.effects__preview');
 const imgUploadTarget = form.querySelector('.img-upload__start');
-const imgEffectLevelSlider = form.querySelector('.effect-level__slider');
+const imgEffectLevel = form.querySelector('.img-upload__effect-level');
 const imgUploadHashtag = imgUploadOverlay.querySelector('.text__hashtags');
-const imgUploadComments = imgUploadOverlay.querySelector('.text__comments');
+const imgUploadComments = imgUploadOverlay.querySelector('.text__description');
 
 // загрузка фотографий пользователя
 // проверка файла
@@ -64,9 +64,14 @@ imgUploadTarget.addEventListener('drop', (evt) => {
 });
 
 // проверка на фокус на полях с хэштегами и комментарием
-const isTextFieldFocus = () =>
-  document.activeElement === imgUploadHashtag ||
-  document.activeElement === imgUploadComments;
+const isTextFieldFocus = () => {
+  if (document.activeElement === imgUploadHashtag) {
+    return true;
+  }
+  if (document.activeElement === imgUploadComments) {
+    return true;
+  }
+};
 
 // видимость ошибки
 const isErrorMessageShown = () => Boolean(document.querySelector('.error'));
@@ -83,7 +88,7 @@ const onDocumentKeydown = (evt) => {
 function openImgPreviewForm () {
   imgUploadOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
-  imgEffectLevelSlider.setAttribute('disabled', true);
+  imgEffectLevel.classList.add('hidden');
   document.addEventListener('keydown', onDocumentKeydown);
 }
 

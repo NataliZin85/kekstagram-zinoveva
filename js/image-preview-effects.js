@@ -2,7 +2,7 @@ const DEFAULT_EFFECT_LEVEL_VALUE = 100;
 
 const form = document.querySelector('#upload-select-image');
 const imageUploadPreview = form.querySelector('.img-upload__preview img');
-const imgEffectLevel = form.querySelector('.effect-level');
+const imgEffectLevel = form.querySelector('.img-upload__effect-level');
 const imgEffectLevelValue = imgEffectLevel.querySelector('.effect-level__value');
 const imgEffectLevelSlider = imgEffectLevel.querySelector('.effect-level__slider');
 
@@ -68,7 +68,7 @@ const resetEffects = () => {
     step: 1
   });
   imgEffectLevelSlider.noUiSlider.set(100);
-  imgEffectLevelSlider.setAttribute('disabled', true);
+  imgEffectLevel.classList.add('hidden');
   imageUploadPreview.style.filter = null;
 };
 
@@ -76,7 +76,7 @@ const resetEffects = () => {
 effectChrome.addEventListener('change', (evt) => {
   if (evt.target.checked) {
     effectName = 'grayscale';
-    imgEffectLevelSlider.removeAttribute('disabled', true);
+    imgEffectLevel.classList.remove('hidden');
     imgEffectLevelSlider.noUiSlider.updateOptions({
       range: {
         min: 0,
@@ -91,7 +91,7 @@ effectChrome.addEventListener('change', (evt) => {
 effectSepia.addEventListener('change', (evt) => {
   if (evt.target.checked) {
     effectName = 'sepia';
-    imgEffectLevelSlider.removeAttribute('disabled', true);
+    imgEffectLevel.classList.remove('hidden');
     imgEffectLevelSlider.noUiSlider.updateOptions({
       range: {
         min: 0,
@@ -106,7 +106,7 @@ effectSepia.addEventListener('change', (evt) => {
 effectMarvin.addEventListener('change', (evt) => {
   if (evt.target.checked) {
     effectName = 'invert';
-    imgEffectLevelSlider.removeAttribute('disabled', true);
+    imgEffectLevel.classList.remove('hidden');
     imgEffectLevelSlider.noUiSlider.updateOptions({
       range: {
         min: 0,
@@ -121,7 +121,7 @@ effectMarvin.addEventListener('change', (evt) => {
 effectPhobos.addEventListener('change', (evt) => {
   if (evt.target.checked) {
     effectName = 'blur';
-    imgEffectLevelSlider.removeAttribute('disabled', true);
+    imgEffectLevel.classList.remove('hidden');
     imgEffectLevelSlider.noUiSlider.updateOptions({
       range: {
         min: 0,
@@ -136,7 +136,7 @@ effectPhobos.addEventListener('change', (evt) => {
 effectHeat.addEventListener('change', (evt) => {
   if (evt.target.checked) {
     effectName = 'brightness';
-    imgEffectLevelSlider.removeAttribute('disabled', true);
+    imgEffectLevel.classList.remove('hidden');
     imgEffectLevelSlider.noUiSlider.updateOptions({
       range: {
         min: 1,
