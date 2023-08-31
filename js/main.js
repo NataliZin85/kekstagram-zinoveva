@@ -1,4 +1,4 @@
-import { showAlertMessage, debaunce } from './util.js';
+import { showAlertMessage, debounce } from './util.js';
 import { renderMiniPictures } from './mini-pictures.js';
 import './big-picture-modal.js';
 import './big-picture.js';
@@ -13,7 +13,7 @@ import { getFilteredPictures, initUploadImgFilters } from './filter-mini-picture
 
 getData()
   .then((data) => {
-    const debouncedRenderMiniPictures = debaunce(renderMiniPictures);
+    const debouncedRenderMiniPictures = debounce(renderMiniPictures);
     initUploadImgFilters(data, debouncedRenderMiniPictures);
     renderMiniPictures(getFilteredPictures());
   })

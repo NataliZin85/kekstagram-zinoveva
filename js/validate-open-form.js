@@ -18,11 +18,11 @@ const imgUploadComments = imgUploadOverlay.querySelector('.text__description');
 // загрузка фотографий пользователя
 // проверка файла
 const validateFile = (file) => {
-  const allowedExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
+  const allowedExtensions = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
   const fileExtension = file.type.split('/')[1];
-  const isValidFile = allowedExtension.includes(fileExtension);
+  const isValidFile = allowedExtensions.includes(fileExtension);
   if (!isValidFile) {
-    showAlertMessage(`Подходящий формат файла: *.${ allowedExtension.join(', *.')}`);
+    showAlertMessage(`Подходящий формат файла: *.${ allowedExtensions.join(', *.')}`);
   }
   return isValidFile;
 };

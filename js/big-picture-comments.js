@@ -39,7 +39,7 @@ const showComments = () => {
   });
 };
 
-const hendleCommentsLoaderClick = () => {
+const handleCommentsLoaderClick = () => {
   if (currentCountComment < totalCountComment) {
     const tailStep = totalCountComment - currentCountComment;
     const step = tailStep < DEFAULT_STEP ? tailStep : DEFAULT_STEP;
@@ -78,6 +78,6 @@ const renderBigComments = (comments) => {
   commentElements = bigPictureComments.querySelectorAll('li');
 };
 
-commentsLoader.addEventListener('click', hendleCommentsLoaderClick);
+commentsLoader.addEventListener('click', handleCommentsLoaderClick);
 
 export { renderBigComments, createBigPictureComment };
