@@ -1,8 +1,10 @@
 const MAX_HASHTAGS_LENGTH = 5;
+// хэш-тег допустимая форма
+const HASHTAG = /^#[a-zа-яё0-9]{1,19}$/i;
 
 const SubmitButtonText = {
   IDLE: 'Опубликовать',
-  SENDING: 'Опубликую...'
+  SENDING: 'Публикую...'
 };
 
 const ErrorText = {
@@ -22,15 +24,12 @@ const pristine = new Pristine(form, {
   errorTextClass: 'img-upload__field-wrapper--error',
 });
 
-// хэш-тег допустимая форма
-const hashtag = /^#[a-zа-яё0-9]{1,19}$/i;
-
 const normalizeHashtag = (tagString) => tagString
   .trim()
   .split(' ')
   .filter((tag) => Boolean(tag.length)); // берет только заполненные хэштеги. пробелы неучитывает
 
-const validateRegex = (str) => hashtag.test(str);
+const validateRegex = (str) => HASHTAG.test(str);
 
 // валидация самого хештега
 const validateHashtag = (oneHashtag) => {

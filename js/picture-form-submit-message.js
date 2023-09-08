@@ -35,13 +35,17 @@ function closeMessage() {
   body.removeEventListener('click', onBodyClick);
 }
 
+const onMessageClose = () => {
+  closeMessage();
+};
+
 const showMessage = (messageElement, closeButtonClass) => {
   body.append(messageElement);
   document.addEventListener('keydown', onDocumentKeydown);
   body.addEventListener('click', onBodyClick);
   messageElement
     .querySelector(closeButtonClass)
-    .addEventListener('click', closeMessage);
+    .addEventListener('click', onMessageClose);
 };
 
 const showSuccessMessage = () => {

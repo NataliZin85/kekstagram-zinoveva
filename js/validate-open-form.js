@@ -1,7 +1,7 @@
 import { isEscapeKey, isEnterKey, showAlertMessage } from './util.js';
 import { resetForm } from './validate-form.js';
 import { resetScale } from './image-preview.js';
-import { resetEffects } from './image-preview-effects.js';
+import { initEffectsSlider, resetEffects } from './image-preview-effects.js';
 
 const body = document.querySelector('body');
 const form = document.querySelector('#upload-select-image');
@@ -64,14 +64,9 @@ imgUploadTarget.addEventListener('drop', (evt) => {
 });
 
 // проверка на фокус на полях с хэштегами и комментарием
-const isTextFieldFocus = () => {
-  if (document.activeElement === imgUploadHashtag) {
-    return true;
-  }
-  if (document.activeElement === imgUploadComments) {
-    return true;
-  }
-};
+const isTextFieldFocus = () =>
+  document.activeElement === imgUploadHashtag ||
+  document.activeElement === imgUploadComments;
 
 // видимость ошибки
 const isErrorMessageShown = () => Boolean(document.querySelector('.error'));
@@ -89,6 +84,7 @@ function openImgPreviewForm () {
   imgUploadOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
   imgEffectLevel.classList.add('hidden');
+  initEffectsSlider();
   document.addEventListener('keydown', onDocumentKeydown);
 }
 

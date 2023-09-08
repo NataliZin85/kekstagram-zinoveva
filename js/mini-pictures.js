@@ -8,7 +8,7 @@ const templateMiniPicture = document.querySelector('#picture')
   .content
   .querySelector('.picture');
 
-const handleMiniPictureClick = (evt,data) => {
+const miniPictureHandler = (evt,data) => {
   evt.preventDefault();
   openBigPicture(data);
 };
@@ -23,7 +23,7 @@ const createMiniPicture = (data) => {
   miniPictureObject.querySelector('.picture__likes').textContent = likes;
   miniPictureObject.querySelector('.picture__comments').textContent = comments.length;
 
-  miniPictureObject.addEventListener('click', (evt) => handleMiniPictureClick(evt, data));
+  miniPictureObject.addEventListener('click', (evt) => miniPictureHandler(evt, data));
 
   miniPictureObject.addEventListener('keydown', (evt) => {
     if (isEnterKey(evt)) {
@@ -34,9 +34,13 @@ const createMiniPicture = (data) => {
   return miniPictureObject;
 };
 
+const resetMiniPictures = () => {
+  userPictures.querySelectorAll('.picture').forEach((element) => element.remove());
+};
+
 // добавление клонированных изображений в контейнер ".pictures"
 const renderMiniPictures = (pictures) => {
-  userPictures.querySelectorAll('.picture').forEach((element) => element.remove());
+  resetMiniPictures();
   const fragment = document.createDocumentFragment();
 
   pictures.forEach((picture) => {
